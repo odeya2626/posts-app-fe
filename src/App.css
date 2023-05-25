@@ -8,3 +8,39 @@
 .posts_list {
   padding: 20px;
 }
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  object-fit: contain;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+.app-header-logo {
+  object-fit: contain;
+  width: 200px;
+}
+.app_signin {
+  display: flex;
+  flex-direction: column;
+}
+
+/* modal */
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.dialog-content {
+  margin: 20px;
+}
+.space-bottom {
+  margin-bottom: 10px;
+}

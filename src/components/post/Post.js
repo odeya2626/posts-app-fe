@@ -7,7 +7,6 @@ export default function Post({ post }) {
   const BASE_URL = "http://127.0.0.1:8000";
   const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
-  console.log(post);
 
   useEffect(() => {
     post.img_url_type === "absolute"

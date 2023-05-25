@@ -1,34 +1,25 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import Header from "./components/Header";
+
 import PostList from "./components/PostList";
-import Post from "./components/post/Post";
+import { useState } from "react";
 
+import ModalApp from "./components/ModalApp";
+
+export const BASE_URL = "http://127.0.0.1:8000";
 function App() {
-  const BASE_URL = "http://127.0.0.1:8000";
-  const [posts, setPosts] = useState([]);
-  const getPosts = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/post/all`);
-      const data = await response.json();
-      setPosts(data);
-      // console.log(data[1]);
-    } catch (error) {
-      console.log(error);
-    }
+  const [openModal, setOpenModal] = useState(false);
+  console.log(process.env.REACT_APP_API_URL);
+  const handleModalState = (state) => {
+    setOpenModal(state);
   };
-
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   return (
     <div className="App">
-      <div className="app_posts">
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
-        ))}
-      </div>
-      {/* <PostList posts={posts} /> */}
+      <ModalApp handleModalState={handleModalState} modalState={openModal} />
+
+      <Header handleModalState={handleModalState} />
+      <PostList />
     </div>
   );
 }
