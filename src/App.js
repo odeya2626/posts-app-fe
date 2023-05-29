@@ -1,25 +1,25 @@
 import "./App.css";
 import Header from "./components/Header";
-
 import PostList from "./components/PostList";
-import { useState } from "react";
-
 import ModalApp from "./components/ModalApp";
+import ImageUpload from "./components/imageUpload/ImageUpload";
+import { useUserContext } from "./context/UserContext";
 
-export const BASE_URL = "http://127.0.0.1:8000";
+export const BASE_URL = process.env.REACT_APP_API_URL;
 function App() {
-  const [openModal, setOpenModal] = useState(false);
-  console.log(process.env.REACT_APP_API_URL);
-  const handleModalState = (state) => {
-    setOpenModal(state);
-  };
+  const { currentUser } = useUserContext();
 
   return (
     <div className="App">
-      <ModalApp handleModalState={handleModalState} modalState={openModal} />
+      <ModalApp />
 
-      <Header handleModalState={handleModalState} />
+      <Header />
       <PostList />
+      {currentUser && currentUser.access_token ? (
+        <ImageUpload />
+      ) : (
+        <h3>Sign in to see your posts</h3>
+      )}
     </div>
   );
 }

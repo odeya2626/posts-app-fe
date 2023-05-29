@@ -37,3 +37,29 @@
   justify-content: space-between;
   margin-left: 10px;
 }
+
+.post_commentBox {
+  display: flex;
+  margin-top: 5px;
+}
+.post_input {
+  flex: 1;
+  border: none;
+  border-top: 1px solid lightgray;
+  padding: 10px;
+}
+.post_button {
+  border: none;
+  border-top: 1px solid lightgray;
+  background-color: transparent;
+  color: #0095f6;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px;
+}
+.post_button:hover {
+  background-color: #fafafa;
+}
+.post_comment_text {
+  margin-left: 10px;
+}

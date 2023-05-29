@@ -17,7 +17,7 @@ export default function InputComponent({
       onChange={(e) => {
         updateUserInfo(e);
       }}
-      required
+      required={true}
     />
   );
 }
