@@ -10,7 +10,7 @@ export default function Post({ post }) {
   const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  console.log(post);
+
   const handleDelete = async (e) => {
     e?.preventDefault();
     try {
@@ -111,7 +111,7 @@ export default function Post({ post }) {
       <h4 className="post_text">{post.caption}</h4>
       <div className="post_comments">
         {comments.map((comment) => (
-          <p>
+          <p key={comment.id}>
             <strong className="post_comment_username">
               {comment.username}:
             </strong>

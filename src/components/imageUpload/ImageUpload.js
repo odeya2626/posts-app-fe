@@ -7,7 +7,7 @@ export default function ImageUpload() {
   const currentUser = getLocalStorage("currentUser");
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
-  const [showUpload, setShowUpload] = useState(false);
+
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);

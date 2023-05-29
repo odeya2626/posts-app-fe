@@ -4,7 +4,6 @@ import "../App.css";
 import { useEffect, useState } from "react";
 
 export default function PostList() {
-  // const BASE_URL = "http://127.0.0.1:8000";
   const [posts, setPosts] = useState([]);
   const getPosts = async () => {
     try {
