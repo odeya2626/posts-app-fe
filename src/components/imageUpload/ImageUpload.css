@@ -5,6 +5,7 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+  position: sticky;
 }
 .caption-input {
   margin-bottom: 10px;
@@ -12,6 +13,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 300px;
+  max-width: 95%;
 }
 
 .file-input {
@@ -46,6 +48,9 @@
 
 .file-input:focus + .file-upload-label {
   outline: 2px solid #3897f0;
+}
+.selected-file {
+  font-size: 80%;
 }
 /* width: 60%;
   max-width: 500px;

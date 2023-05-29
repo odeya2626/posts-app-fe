@@ -7,6 +7,7 @@ export default function ImageUpload() {
   const currentUser = getLocalStorage("currentUser");
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
+  const [showUpload, setShowUpload] = useState(false);
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -73,29 +74,34 @@ export default function ImageUpload() {
   };
 
   return (
-    <div className="image-upload">
-      <input
-        className="caption-input"
-        type="text"
-        name="caption"
-        placeholder="Enter your caption"
-        onChange={(e) => setCaption(e.target.value)}
-        value={caption}
-      />
-      <input
-        type="file"
-        name="image"
-        onChange={handleChange}
-        className="file-input"
-        id="file-input"
-      />
-      <label htmlFor="file-input" className="file-upload-label">
-        <div className="upload-icon">&#x21ea;</div>
-        <div className="upload-text">Upload Image</div>
-      </label>
-      <Button className="image-upload-btn" onClick={handleUpload}>
-        Upload
-      </Button>
+    <div className="image-upload-container">
+      <div className="image-upload">
+        <input
+          className="caption-input"
+          type="text"
+          name="caption"
+          placeholder="Enter your caption"
+          onChange={(e) => setCaption(e.target.value)}
+          value={caption}
+        />
+        <input
+          type="file"
+          name="image"
+          onChange={handleChange}
+          className="file-input"
+          id="file-input"
+        />
+        <label htmlFor="file-input" className="file-upload-label">
+          <div className="upload-icon">&#x21ea;</div>
+          <div className="upload-text">Upload Image</div>
+        </label>
+        {image && (
+          <div className="selected-file">Selected file: {image.name}</div>
+        )}
+        <Button className="image-upload-btn" onClick={handleUpload}>
+          Upload
+        </Button>
+      </div>
     </div>
   );
 }
