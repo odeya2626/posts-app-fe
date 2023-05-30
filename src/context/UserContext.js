@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage, { deleteLocalStorage } from "../hooks/useLocalStorage";
 
 export const UserContext = createContext();
 export function useUserContext() {
@@ -16,6 +16,8 @@ export default function UserContextProvider({ children }) {
 
   const signOut = () => {
     setCurrentUser(null);
+    deleteLocalStorage("currentUser");
+    window.location.reload();
   };
 
   return (

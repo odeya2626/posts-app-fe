@@ -60,10 +60,11 @@ export function Auth({ handleModalState }) {
       };
       const response = await fetch(BASE_URL + "/user/register", reqOptions);
       if (response.ok) {
-        const data = await response.json();
-        console.log("data", data);
-        setMessage("User signed up successfully.");
-        handleModalState(true, "signin");
+        handleSignin();
+        // const data = await response.json();
+        // console.log("data", data);
+        // setMessage("User signed up successfully.");
+        // handleModalState(true, "signin");
         return;
       }
       const data = await response.json();
@@ -91,10 +92,10 @@ export function Auth({ handleModalState }) {
       const response = await fetch(BASE_URL + "/login", reqOptions);
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data);
+        // console.log("data", data);
         setCurrentUser(data);
-
         handleModalState(false, "");
+        window.location.reload();
         return;
       }
       const data = await response.json();

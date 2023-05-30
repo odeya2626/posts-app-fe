@@ -7,6 +7,7 @@ import { getLocalStorage } from "../../hooks/useLocalStorage";
 export default function Post({ post }) {
   const BASE_URL = process.env.REACT_APP_API_URL;
   const currentUser = getLocalStorage("currentUser");
+  // console.log(currentUser?.access_token);
   const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");

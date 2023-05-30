@@ -18,3 +18,6 @@ export function getLocalStorage(key) {
   const currentValue = JSON.parse(localStorage.getItem(key));
   return currentValue ? currentValue : null;
 }
+export function deleteLocalStorage(key) {
+  localStorage.removeItem(key);
+}

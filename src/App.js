@@ -4,6 +4,7 @@ import PostList from "./components/PostList";
 import ModalApp from "./components/ModalApp";
 import ImageUpload from "./components/imageUpload/ImageUpload";
 import { useUserContext } from "./context/UserContext";
+import { useEffect } from "react";
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
 function App() {
