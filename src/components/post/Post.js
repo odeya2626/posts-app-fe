@@ -108,7 +108,7 @@ export default function Post({ post }) {
         </div>
       </div>
 
-      <img className="post_img" src={imageUrl} alt="pic" />
+      <img className="post_img" src={imageUrl} alt="pic" loading="lazy" />
       <h4 className="post_text">{post.caption}</h4>
       <div className="post_comments">
         {comments.map((comment) => (

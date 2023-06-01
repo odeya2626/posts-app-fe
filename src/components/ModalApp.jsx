@@ -3,6 +3,7 @@ import { Button, Dialog, DialogContent } from "@mui/material";
 import InputComponent from "./Inputs";
 import { BASE_URL } from "../App";
 import { useUserContext } from "../context/UserContext";
+import ImageUpload from "./imageUpload/ImageUpload";
 
 export default function ModalApp() {
   const { openModal, handleModalState } = useUserContext();
@@ -15,7 +16,11 @@ export default function ModalApp() {
       className="dialog-container"
     >
       <DialogContent className="dialog-content">
-        <Auth handleModalState={handleModalState} />
+        {openModal.type === "imageUpload" ? (
+          <ImageUpload />
+        ) : (
+          <Auth handleModalState={handleModalState} />
+        )}
       </DialogContent>
     </Dialog>
   );

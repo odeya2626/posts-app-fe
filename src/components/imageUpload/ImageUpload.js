@@ -1,5 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+// import Compressor from "compressorjs";
+
 import "./ImageUpload.css";
 import { getLocalStorage } from "../../hooks/useLocalStorage";
 
@@ -13,12 +15,25 @@ export default function ImageUpload() {
       setImage(e.target.files[0]);
     }
   };
+  // const compresser = async () => {
+  //   new Compressor(image, {
+  //     quality: 0.8,
+  //     success(result) {
+  //       return result;
+  //     },
+  //     error(err) {
+  //       console.log(err.message);
+  //     },
+  //   });
+  // };
 
   const handleUpload = async (e) => {
     e?.preventDefault();
     try {
       const formData = new FormData();
       formData.append("image", image);
+      // const result = await compresser();
+      // formData.append("image", result, result.name);
 
       const requestOptions = {
         method: "POST",
@@ -49,7 +64,7 @@ export default function ImageUpload() {
       const json_string = JSON.stringify({
         caption: caption,
         img_url: imgURL,
-        img_url_type: "relative",
+        img_url_type: "absolute",
         creator_id: currentUser.user_id,
       });
       const requestOptions = {

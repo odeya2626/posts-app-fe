@@ -2,10 +2,31 @@
   margin: 0;
   padding: 0;
 }
-.app {
+html body #root .App {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #ff0000;
+}
+.App {
   background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
 }
 .posts_list {
+  flex: 1;
   padding: 20px;
 }
 .app-header {
@@ -20,6 +41,7 @@
   justify-content: space-between;
   align-items: center;
   color: black;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
 }
 .app-header-logo {
   object-fit: contain;
@@ -35,7 +57,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 }
 .dialog-content {
@@ -55,4 +77,18 @@
   bottom: 0;
   width: 100%;
   cursor: pointer;
+}
+
+.edit-icon {
+  color: white;
+  background-color: blueviolet;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  margin: 20px;
 }
