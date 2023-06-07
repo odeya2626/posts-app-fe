@@ -11,7 +11,7 @@ export default function PostList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const getPosts = async () => {
+  const getLatestPosts = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/post?page=${page}&limit=${limit}`
@@ -54,15 +54,13 @@ export default function PostList() {
   // };
 
   useEffect(() => {
-    getPosts();
+    getLatestPosts();
   }, []);
   return (
     <div className="posts_list" id="scrollableDiv" style={{ overflow: "auto" }}>
       <InfiniteScroll
         dataLength={posts.length}
         next={getNextPosts}
-        // style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
-        // inverse={true}
         hasMore={hasMore}
         loader={<Loader />}
         scrollableTarget="scrollableDiv"

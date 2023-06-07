@@ -35,7 +35,7 @@ export default function ImageComponent({ post }) {
         alt={post.caption}
         onLoad={handleImageLoad}
         onError={handleImageError}
-        className="post_img"
+        className="post_img image-animation"
         style={{ display: isLoading ? "none" : "block" }}
       />
     </div>
