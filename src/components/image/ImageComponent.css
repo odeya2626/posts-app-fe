@@ -1,0 +1,7 @@
+.post_img {
+  width: 100%;
+  min-height: 200px;
+  object-fit: contain;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}

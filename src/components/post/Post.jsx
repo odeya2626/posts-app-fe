@@ -3,12 +3,11 @@ import "./Post.css";
 import { Avatar, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getLocalStorage } from "../../hooks/useLocalStorage";
+import ImageComponent from "../image/ImageComponent";
 
 export default function Post({ post }) {
   const BASE_URL = process.env.REACT_APP_API_URL;
   const currentUser = getLocalStorage("currentUser");
-  // console.log(currentUser?.access_token);
-  const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -67,24 +66,6 @@ export default function Post({ post }) {
       console.log(err);
     }
   };
-  // const fetchComments = async () => {
-  //   try {
-  //     const response = await fetch(BASE_URL + "/comment/all/" + post.id);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setComments(data);
-  //     }
-  //     throw response;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  useEffect(() => {
-    post.img_url_type === "absolute"
-      ? setImageUrl(post.img_url)
-      : setImageUrl(BASE_URL + "/" + post.img_url);
-  }, [BASE_URL, post.img_url, post.img_url_type]);
 
   useEffect(() => {
     setComments(post.comments);
@@ -107,8 +88,8 @@ export default function Post({ post }) {
           )}
         </div>
       </div>
+      <ImageComponent post={post} />
 
-      <img className="post_img" src={imageUrl} alt="pic" loading="lazy" />
       <h4 className="post_text">{post.caption}</h4>
       <div className="post_comments">
         {comments.map((comment) => (

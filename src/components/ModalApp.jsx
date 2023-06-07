@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogContent } from "@mui/material";
 import InputComponent from "./Inputs";
-import { BASE_URL } from "../App";
 import { useUserContext } from "../context/UserContext";
 import ImageUpload from "./imageUpload/ImageUpload";
 
@@ -63,13 +62,12 @@ export function Auth({ handleModalState }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userInfo),
       };
-      const response = await fetch(BASE_URL + "/user/register", reqOptions);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/user/register`,
+        reqOptions
+      );
       if (response.ok) {
         handleSignin();
-        // const data = await response.json();
-        // console.log("data", data);
-        // setMessage("User signed up successfully.");
-        // handleModalState(true, "signin");
         return;
       }
       const data = await response.json();
@@ -94,10 +92,13 @@ export function Auth({ handleModalState }) {
         method: "POST",
         body: formData,
       };
-      const response = await fetch(BASE_URL + "/login", reqOptions);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/login`,
+        reqOptions
+      );
       if (response.ok) {
         const data = await response.json();
-        // console.log("data", data);
+
         setCurrentUser(data);
         handleModalState(false, "");
         window.location.reload();

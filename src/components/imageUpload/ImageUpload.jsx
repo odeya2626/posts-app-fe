@@ -90,15 +90,15 @@ export default function ImageUpload() {
 
   return (
     <div className="image-upload-container">
+      <input
+        className="caption-input"
+        type="text"
+        name="caption"
+        placeholder="Enter your caption"
+        onChange={(e) => setCaption(e.target.value)}
+        value={caption}
+      />
       <div className="image-upload">
-        <input
-          className="caption-input"
-          type="text"
-          name="caption"
-          placeholder="Enter your caption"
-          onChange={(e) => setCaption(e.target.value)}
-          value={caption}
-        />
         <input
           type="file"
           name="image"
