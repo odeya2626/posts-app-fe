@@ -27,10 +27,11 @@ export default function Post({ post }) {
       if (response.ok) {
         window.location.reload();
       }
+
       throw response;
     } catch (err) {
       console.log(err);
-      alert("err");
+      alert(err?.statusText || "Something went wrong");
     }
   };
   const postComment = async (e) => {
