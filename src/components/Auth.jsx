@@ -5,7 +5,7 @@ import { useUserContext } from "../context/UserContext";
 import InputComponent from "./Inputs";
 
 export function Auth({ handleModalState }) {
-  const { setCurrentUser, openModal } = useUserContext();
+  const { setCurrentUser, openModal, setCurrentUserInfo } = useUserContext();
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
@@ -78,8 +78,9 @@ export function Auth({ handleModalState }) {
       );
       if (response.ok) {
         const data = await response.json();
-
+        console.log(data);
         setCurrentUser(data);
+        setCurrentUserInfo(data);
         handleModalState(false, "");
         window.location.reload();
         return;

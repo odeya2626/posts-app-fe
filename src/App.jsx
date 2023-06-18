@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import PostList from "./components/PostList";
 import ModalApp from "./components/ModalApp";
 import { useUserContext } from "./context/UserContext";
+import Profile from "./components/profile/Profile";
 
 function App() {
   const { currentUser, handleModalState } = useUserContext();
@@ -15,7 +16,8 @@ function App() {
       <ModalApp />
 
       <Header />
-      <PostList />
+      {/* <PostList /> */}
+      <Profile />
       <div
         className="edit-icon-container"
         onClick={() =>

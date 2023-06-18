@@ -9,7 +9,7 @@ export function useUserContext() {
 export default function UserContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
   const [openModal, setOpenModal] = useState({ state: false, type: "" });
-
+  const [currentUserInfo, setCurrentUserInfo] = useState({});
   const handleModalState = (state, type = "") => {
     setOpenModal({ state, type });
   };
@@ -28,6 +28,8 @@ export default function UserContextProvider({ children }) {
         signOut,
         openModal,
         handleModalState,
+        currentUserInfo,
+        setCurrentUserInfo,
       }}
     >
       {children}
