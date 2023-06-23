@@ -9,6 +9,7 @@ import { CircularProgress, Paper } from "@mui/material";
 import "./Profile.css";
 import { useUserContext } from "../../context/UserContext";
 import InputComponent from "../../components/Inputs";
+import { handleUpload } from "../../utils/functions";
 
 export default function Profile() {
   const { currentUser, setCurrentUser } = useUserContext();
@@ -39,36 +40,13 @@ export default function Profile() {
     }
   };
 
-  const handleUpload = async (image) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", image);
-
-      const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-          Authorization: `Bearer ${currentUser.access_token}`,
-        }),
-        body: formData,
-      };
-
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post/image`,
-        requestOptions
-      );
-      const data = await response.json();
-      return data.filename;
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
       const url = userInfo.profile_img
-        ? await handleUpload(userInfo.profile_img)
+        ? await handleUpload(userInfo.profile_img, currentUser.access_token)
         : currentUser.profile_img || "";
 
       const res = await fetch(`${process.env.REACT_APP_API_URL}/user`, {

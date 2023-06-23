@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import "./ImageUpload.css";
 import { useUserContext } from "../../context/UserContext";
+import { handleUpload } from "../../utils/functions";
 
 export default function ImageUpload() {
   const { currentUser } = useUserContext();
@@ -15,27 +16,11 @@ export default function ImageUpload() {
     }
   };
 
-  const handleUpload = async (e) => {
+  const handleSubmit = async (e) => {
     e?.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("image", image);
-
-      const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-          Authorization: `Bearer ${currentUser.access_token}`,
-        }),
-        body: formData,
-      };
-
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post/image`,
-        requestOptions
-      );
-
-      const data = await response.json();
-      createPost(data.filename);
+      const data = await handleUpload(image, currentUser.access_token);
+      createPost(data);
     } catch (err) {
       console.log(err);
     } finally {
@@ -99,7 +84,7 @@ export default function ImageUpload() {
         {image && (
           <div className="selected-file">Selected file: {image.name}</div>
         )}
-        <Button className="image-upload-btn" onClick={handleUpload}>
+        <Button className="image-upload-btn" onClick={handleSubmit}>
           Upload
         </Button>
       </div>
