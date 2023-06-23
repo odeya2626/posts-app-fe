@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./Post.css";
 import { Avatar, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getLocalStorage } from "../../hooks/useLocalStorage";
+
 import ImageComponent from "../image/ImageComponent";
+import { useUserContext } from "../../context/UserContext";
 
 export default function Post({ post }) {
   const BASE_URL = process.env.REACT_APP_API_URL;
-  const currentUser = getLocalStorage("currentUser");
+  const { currentUser } = useUserContext();
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -30,7 +31,6 @@ export default function Post({ post }) {
       throw response;
     } catch (err) {
       console.log(err);
-      alert("err");
     }
   };
   const postComment = async (e) => {
@@ -74,7 +74,7 @@ export default function Post({ post }) {
   return (
     <div className="post">
       <div className="post_header">
-        <Avatar alt={post.caption} src="" />
+        <Avatar alt={post.caption} src={post.user.profile_img || ""} />
         <div className="post_header_info">
           <h3>{post.user.username}</h3>
           {post.creator_id === currentUser?.user_id && (

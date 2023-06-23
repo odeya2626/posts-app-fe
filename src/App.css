@@ -20,6 +20,9 @@ html {
 ::-webkit-scrollbar-thumb {
   background: #ff0000;
 }
+.pointer {
+  cursor: pointer;
+}
 .App {
   background-color: #fafafa;
   display: flex;

@@ -1,12 +1,11 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-// import Compressor from "compressorjs";
 
 import "./ImageUpload.css";
-import { getLocalStorage } from "../../hooks/useLocalStorage";
+import { useUserContext } from "../../context/UserContext";
 
 export default function ImageUpload() {
-  const currentUser = getLocalStorage("currentUser");
+  const { currentUser } = useUserContext();
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
 
@@ -15,25 +14,12 @@ export default function ImageUpload() {
       setImage(e.target.files[0]);
     }
   };
-  // const compresser = async () => {
-  //   new Compressor(image, {
-  //     quality: 0.8,
-  //     success(result) {
-  //       return result;
-  //     },
-  //     error(err) {
-  //       console.log(err.message);
-  //     },
-  //   });
-  // };
 
   const handleUpload = async (e) => {
     e?.preventDefault();
     try {
       const formData = new FormData();
       formData.append("image", image);
-      // const result = await compresser();
-      // formData.append("image", result, result.name);
 
       const requestOptions = {
         method: "POST",

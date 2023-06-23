@@ -32,3 +32,10 @@
   margin: 0;
   padding: 0;
 }
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

@@ -7,17 +7,14 @@ export default function useLocalStorage(key, initialValue) {
   });
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(storedValue));
-    return () => {
-      localStorage.removeItem(key);
-    };
   }, [storedValue, key]);
 
   return [storedValue, setStoredValue];
 }
-export function getLocalStorage(key) {
-  const currentValue = JSON.parse(localStorage.getItem(key));
-  return currentValue ? currentValue : null;
-}
+// export function getLocalStorage(key) {
+//   const currentValue = JSON.parse(localStorage.getItem(key));
+//   return currentValue ? currentValue : null;
+// }
 export function deleteLocalStorage(key) {
   localStorage.removeItem(key);
 }

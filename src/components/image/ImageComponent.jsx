@@ -8,7 +8,6 @@ export default function ImageComponent({ post }) {
   const [isError, setIsError] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const handleImageLoad = () => {
-    console.log("loaded");
     setIsLoading(false);
   };
 
