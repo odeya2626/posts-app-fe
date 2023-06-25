@@ -4,6 +4,7 @@ import "../App.css";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "./loader/Loader";
+import { getPostsPage } from "../api";
 
 export default function PostList() {
   const limit = 3;
@@ -13,10 +14,8 @@ export default function PostList() {
 
   const getLatestPosts = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post?page=${page}&limit=${limit}`
-      );
-      const data = await response.json();
+      const response = await getPostsPage(page, limit);
+      const data = response.data;
       const newList = [...data];
 
       setPosts((posts) => newList);
@@ -30,10 +29,9 @@ export default function PostList() {
   };
   const getNextPosts = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post?page=${page + 1}&limit=${limit}`
-      );
-      const data = await response.json();
+      const response = await getPostsPage(page + 1, limit);
+      const data = response.data;
+
       const newList = [...posts, ...data];
       setPosts((posts) => newList);
       setPage((page) => page + 1);
@@ -44,14 +42,6 @@ export default function PostList() {
       console.log(error);
     }
   };
-  // const getAllPosts = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/post/all`);
-  //     const data = await response.json();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   useEffect(() => {
     getLatestPosts();

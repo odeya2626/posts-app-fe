@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import "./ImageUpload.css";
 import { useUserContext } from "../../context/UserContext";
 import { handleUpload } from "../../utils/functions";
+import { addPost } from "../../api";
 
 export default function ImageUpload() {
   const { currentUser } = useUserContext();
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -32,26 +34,17 @@ export default function ImageUpload() {
 
   const createPost = async (imgURL) => {
     try {
-      const json_string = JSON.stringify({
+      if (!imgURL) {
+        setMessage("Please upload an image");
+      }
+      const post_string = {
         caption: caption,
         img_url: imgURL,
         img_url_type: "absolute",
         creator_id: currentUser.user_id,
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-          Authorization: `${currentUser.token_type} ${currentUser.access_token}`,
-          "Content-Type": "application/json",
-        }),
-        body: json_string,
       };
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post`,
-        requestOptions
-      );
-      const data = await response.json();
-      console.log(data);
+
+      const response = await addPost(post_string);
       window.location.reload();
       window.location.scrollTo(0, 0);
     } catch (err) {
@@ -84,6 +77,7 @@ export default function ImageUpload() {
         {image && (
           <div className="selected-file">Selected file: {image.name}</div>
         )}
+        <div className="message error">{message}</div>
         <Button className="image-upload-btn" onClick={handleSubmit}>
           Upload
         </Button>

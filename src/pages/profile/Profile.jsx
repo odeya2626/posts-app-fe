@@ -10,6 +10,7 @@ import "./Profile.css";
 import { useUserContext } from "../../context/UserContext";
 import InputComponent from "../../components/Inputs";
 import { handleUpload } from "../../utils/functions";
+import { updateUser } from "../../api";
 
 export default function Profile() {
   const { currentUser, setCurrentUser } = useUserContext();
@@ -49,19 +50,13 @@ export default function Profile() {
         ? await handleUpload(userInfo.profile_img, currentUser.access_token)
         : currentUser.profile_img || "";
 
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
-        method: "PUT",
-        headers: new Headers({
-          Authorization: `Bearer ${currentUser.access_token}`,
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify({
-          username: userInfo.username,
-          email: userInfo.email,
-          profile_img: url,
-        }),
-      });
-      const data = await res.json();
+      const updatedUser = {
+        username: userInfo.username,
+        email: userInfo.email,
+        profile_img: url,
+      };
+      const response = await updateUser(updatedUser);
+      const data = response.data;
       if (data?.detail) setMessage(data.detail);
       setCurrentUser((prev) => ({ ...prev, ...data }));
       setIsLoading(false);
@@ -74,7 +69,8 @@ export default function Profile() {
     if (currentUser) {
       setSelectedImage(currentUser?.profile_img);
     }
-  }, [currentUser.profile_img, currentUser.username, currentUser.email]);
+  }, [currentUser]);
+  console.log(message);
   return (
     <Paper className="container">
       <form className="profile-form" onSubmit={handleSubmit}>

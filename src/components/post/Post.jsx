@@ -5,9 +5,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import ImageComponent from "../image/ImageComponent";
 import { useUserContext } from "../../context/UserContext";
+import { addComment, deletePost } from "../../api";
 
 export default function Post({ post }) {
-  const BASE_URL = process.env.REACT_APP_API_URL;
   const { currentUser } = useUserContext();
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
@@ -15,17 +15,8 @@ export default function Post({ post }) {
   const handleDelete = async (e) => {
     e?.preventDefault();
     try {
-      const requestOptions = {
-        method: "DELETE",
-        headers: new Headers({
-          Authorization: `Bearer ${currentUser.access_token}`,
-        }),
-      };
-      const response = await fetch(
-        BASE_URL + "/post/delete/" + post.id,
-        requestOptions
-      );
-      if (response.ok) {
+      const response = await deletePost(post.id);
+      if (response.status === 200) {
         window.location.reload();
       }
       throw response;
@@ -36,27 +27,15 @@ export default function Post({ post }) {
   const postComment = async (e) => {
     e?.preventDefault();
     try {
-      const json_string = JSON.stringify({
+      const json_string = {
         text: comment,
         post_id: post.id,
         username: currentUser.username,
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-          Authorization: `Bearer ${currentUser.access_token}`,
-          "Content-Type": "application/json",
-        }),
-        body: json_string,
       };
-      const response = await fetch(
-        BASE_URL + "/comment/create",
-        requestOptions
-      );
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
 
+      const response = await addComment(json_string);
+      if (response.status === 201) {
+        const data = response?.data;
         setComments([...comments, data]);
         setComment("");
         return;

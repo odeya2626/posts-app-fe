@@ -3,8 +3,12 @@ import { Button } from "@mui/material";
 
 import { useUserContext } from "../context/UserContext";
 import InputComponent from "./Inputs";
+import { login, register } from "../api";
+import axios from "axios";
 
 export function Auth({ handleModalState }) {
+  const params = new URLSearchParams(window.location.search);
+
   const { setCurrentUser, openModal, setCurrentUserInfo } = useUserContext();
   const [userInfo, setUserInfo] = useState({
     username: "",
@@ -12,8 +16,11 @@ export function Auth({ handleModalState }) {
     email: "",
   });
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(params.get("message") || "");
   const updateUserInfo = (e) => {
+    if (e.nativeEvent.data && message) {
+      setMessage("");
+    }
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
@@ -37,25 +44,14 @@ export function Auth({ handleModalState }) {
       return;
     }
     try {
-      const reqOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo),
-      };
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/user/register`,
-        reqOptions
-      );
-      if (response.ok) {
+      const response = await register(userInfo);
+      if (response.status === 201) {
         handleSignin();
         return;
       }
-      const data = await response.json();
-
-      data.detail && setMessage(data.detail);
     } catch (err) {
       console.log(err);
-      setMessage(err.toString());
+      setMessage(err?.response?.data?.detail);
     }
   };
 
@@ -68,27 +64,29 @@ export function Auth({ handleModalState }) {
       let formData = new FormData();
       formData.append("username", userInfo.username);
       formData.append("password", userInfo.password);
-      const reqOptions = {
-        method: "POST",
-        body: formData,
-      };
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/login`,
-        reqOptions
-      );
-      if (response.ok) {
-        const data = await response.json();
+
+      const response = await login(formData);
+      console.log(response);
+      const data = response?.data;
+      if (response.status === 200) {
         console.log(data);
-        setCurrentUser(data);
-        setCurrentUserInfo(data);
+        const currentUser = {
+          username: data.username,
+          email: data.email,
+          profile_img: data.profile_img,
+          access_token: data.access_token,
+          user_id: data.user_id,
+        };
+        setCurrentUser(currentUser);
+        setCurrentUserInfo(currentUser);
         handleModalState(false, "");
         window.location.reload();
         return;
       }
-      const data = await response.json();
+
       data.detail && setMessage(data.detail);
     } catch (err) {
-      setMessage(err.toString());
+      setMessage(err?.response?.data?.detail);
     }
   };
 
