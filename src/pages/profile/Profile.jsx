@@ -70,7 +70,7 @@ export default function Profile() {
       setSelectedImage(currentUser?.profile_img);
     }
   }, [currentUser]);
-  console.log(message);
+
   return (
     <Paper className="container">
       <form className="profile-form" onSubmit={handleSubmit}>

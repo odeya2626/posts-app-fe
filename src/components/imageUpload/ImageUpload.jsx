@@ -14,6 +14,7 @@ export default function ImageUpload() {
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
+      setMessage("");
       setImage(e.target.files[0]);
     }
   };
@@ -21,6 +22,10 @@ export default function ImageUpload() {
   const handleSubmit = async (e) => {
     e?.preventDefault();
     try {
+      if (!image) {
+        setMessage("Please upload an image");
+        return;
+      }
       const data = await handleUpload(image, currentUser.access_token);
       createPost(data);
     } catch (err) {
@@ -34,9 +39,6 @@ export default function ImageUpload() {
 
   const createPost = async (imgURL) => {
     try {
-      if (!imgURL) {
-        setMessage("Please upload an image");
-      }
       const post_string = {
         caption: caption,
         img_url: imgURL,

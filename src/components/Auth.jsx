@@ -50,7 +50,6 @@ export function Auth({ handleModalState }) {
         return;
       }
     } catch (err) {
-      console.log(err);
       setMessage(err?.response?.data?.detail);
     }
   };
@@ -69,7 +68,6 @@ export function Auth({ handleModalState }) {
       console.log(response);
       const data = response?.data;
       if (response.status === 200) {
-        console.log(data);
         const currentUser = {
           username: data.username,
           email: data.email,
