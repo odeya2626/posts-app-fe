@@ -3,7 +3,7 @@ The Posts App is a web application that allows authenticated users to create, re
 Registered users can also comment on posts.  
 It consists of a frontend built with React and a backend built with FastAPI which is in posts-app-be repo.
 
-Features
+Features:
 User authentication: Users can register, log in, and log out.
 User's profile: Authenticated users can update their details and upload a profile picture.
 Create posts: Authenticated users can create new posts.
