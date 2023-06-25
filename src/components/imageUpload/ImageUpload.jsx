@@ -1,55 +1,28 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-// import Compressor from "compressorjs";
 
 import "./ImageUpload.css";
-import { getLocalStorage } from "../../hooks/useLocalStorage";
+import { useUserContext } from "../../context/UserContext";
+import { handleUpload } from "../../utils/functions";
+import { addPost } from "../../api";
 
 export default function ImageUpload() {
-  const currentUser = getLocalStorage("currentUser");
+  const { currentUser } = useUserContext();
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
-  // const compresser = async () => {
-  //   new Compressor(image, {
-  //     quality: 0.8,
-  //     success(result) {
-  //       return result;
-  //     },
-  //     error(err) {
-  //       console.log(err.message);
-  //     },
-  //   });
-  // };
 
-  const handleUpload = async (e) => {
+  const handleSubmit = async (e) => {
     e?.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("image", image);
-      // const result = await compresser();
-      // formData.append("image", result, result.name);
-
-      const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-          Authorization: `Bearer ${currentUser.access_token}`,
-        }),
-        body: formData,
-      };
-
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post/image`,
-        requestOptions
-      );
-
-      const data = await response.json();
-      createPost(data.filename);
+      const data = await handleUpload(image, currentUser.access_token);
+      createPost(data);
     } catch (err) {
       console.log(err);
     } finally {
@@ -61,26 +34,17 @@ export default function ImageUpload() {
 
   const createPost = async (imgURL) => {
     try {
-      const json_string = JSON.stringify({
+      if (!imgURL) {
+        setMessage("Please upload an image");
+      }
+      const post_string = {
         caption: caption,
         img_url: imgURL,
         img_url_type: "absolute",
         creator_id: currentUser.user_id,
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-          Authorization: `${currentUser.token_type} ${currentUser.access_token}`,
-          "Content-Type": "application/json",
-        }),
-        body: json_string,
       };
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/post`,
-        requestOptions
-      );
-      const data = await response.json();
-      console.log(data);
+
+      const response = await addPost(post_string);
       window.location.reload();
       window.location.scrollTo(0, 0);
     } catch (err) {
@@ -113,7 +77,8 @@ export default function ImageUpload() {
         {image && (
           <div className="selected-file">Selected file: {image.name}</div>
         )}
-        <Button className="image-upload-btn" onClick={handleUpload}>
+        <div className="message error">{message}</div>
+        <Button className="image-upload-btn" onClick={handleSubmit}>
           Upload
         </Button>
       </div>
