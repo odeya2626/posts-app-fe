@@ -5,7 +5,14 @@ It consists of a frontend built with React and a backend built with FastAPI whic
 
 Features
 User authentication: Users can register, log in, and log out.
+User's profile: Authenticated users can update their details and upload a profile picture.
 Create posts: Authenticated users can create new posts.
-Read posts: Users can view a list of all posts or read individual posts.
-Update posts: Authenticated users can edit and update their own posts.
+Read posts: Users can view a list of all posts and their comments.
+Comment posts: Authenticated users can commet on posts.
 Delete posts: Authenticated users can delete their own posts.
+
+Stack:
+Frontend: React.js
+Backend: FastApi
+DB: PostgreSQL
+ORM: SQLAlchemy
